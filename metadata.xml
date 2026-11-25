@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>ManualCycle</name>
+    <directory>ManualCycle</directory>
+    <description>Cycling item pedestals (Glitched Crown, Tainted Isaac, Binge Eater, Soul of Isaac...) no longer change on their own. Stand next to one and press a key (C by default) to switch to the next item.
+
+- Works on vanilla Repentance, REPENTOGON not required
+- External Item Descriptions: full Glitched Crown list, plus a "(1/2) C: Next Item" line
+- Mod Config Menu Pure: keyboard key, controller button, language, radius, co-op, Tainted Isaac, sound
+- Saved on run continue, co-op support, prices kept in shops and deal rooms
+- Translated into the 20 External Item Descriptions languages</description>
+    <version>1.2.2</version>
+    <visibility>Private</visibility>
+    <tag id="Items"/>
+    <tag id="Tweaks"/>
+</metadata>

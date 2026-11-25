@@ -1,0 +1,8 @@
+# Tests hors jeu (ne doivent pas partir sur le Workshop avec le mod)
+tests_revue/
+node_modules/
+
+# Fichiers systeme
+Thumbs.db
+desktop.ini
+.DS_Store
