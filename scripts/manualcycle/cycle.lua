@@ -73,6 +73,12 @@ local function looksLikeTaintedIsaacCycle(list)
     return #list <= 2
 end
 
+-- Room:GetType() == RoomType.ROOM_DICE (enum verifie si present, au cas ou)
+local function inDiceRoom()
+    if not RoomType or not RoomType.ROOM_DICE then return false end
+    return game:GetRoom():GetType() == RoomType.ROOM_DICE
+end
+
 local function newEntry(subType)
     return { phase = "watch", items = { subType }, index = 1, last = subType }
 end
@@ -136,7 +142,9 @@ function Cycle.OnPickupUpdate(pickup)
     if subType == entry.last then return end
 
     local known = indexOf(entry.items, subType)
-    local rerolled = (not known) and frame() <= rerollGraceUntil
+    -- Objet inconnu = reroll si un actif/une carte vient d'etre utilise, ou dans une Dice Room
+    -- (le de du sol reroll les piedestaux sans passer par MC_USE_ITEM / MC_USE_CARD)
+    local rerolled = (not known) and (frame() <= rerollGraceUntil or inDiceRoom())
 
     if rerolled then
         -- D6 / Spindown / carte... : on repart de zero sur le nouvel objet
