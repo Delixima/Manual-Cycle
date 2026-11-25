@@ -68,6 +68,12 @@ The pedestal therefore cycles normally for one full round before it freezes. Wit
 - **Tainted Isaac pedestals = No** relies on a heuristic: a 2-item cycle is treated as Tainted Isaac's.
 - No controller button is set by default.
 
+## Contributing and license
+
+Contributions are welcome: bug fixes, support for other game versions, new or corrected translations (see `scripts/manualcycle/lang.lua`), or anything else that improves the mod. Open an issue or a pull request on [the official repository](https://github.com/Delixima/Manual-Cycle).
+
+ManualCycle is released under the [MIT License](LICENSE): you are free to use, modify, re-upload and reuse its code and translations in your own mods, as long as the license and copyright notice are kept. Credit is appreciated.
+
 ---
 
 # ManualCycle (Français)
@@ -88,6 +94,8 @@ Les piédestaux à cycle automatique (Glitched Crown, Tainted Isaac, Binge Eater
   - la ligne EID est disponible dans les 20 langues d'EID et suit la langue d'EID ;
   - les textes de Mod Config Menu sont traduits pour les langues à alphabet latin. Les autres langues restent en anglais dans MCM, dont la police n'affiche pas les autres alphabets.
 - **Réglages, coop, sauvegarde et limites :** voir la partie anglaise ci-dessus.
+
+- **Contributions et licence :** les corrections, le support d'autres versions du jeu et les traductions sont les bienvenus via le dépôt officiel (issue ou pull request). Le mod est sous [licence MIT](LICENSE) : chacun peut l'utiliser, le modifier, le republier et reprendre son code dans ses propres mods, en gardant la licence et la mention de copyright.
 
 ## Structure
 
