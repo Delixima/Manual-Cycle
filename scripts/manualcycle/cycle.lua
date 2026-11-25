@@ -79,6 +79,32 @@ local function inDiceRoom()
     return game:GetRoom():GetType() == RoomType.ROOM_DICE
 end
 
+-- Vrai si un joueur proche est en train de ramasser l'objet `id` (il le tient au-dessus de sa tete).
+-- Sert a reconnaitre l'echange d'actif : le jeu pose l'ancien actif du joueur sur le piedestal,
+-- ce changement ne doit surtout pas etre annule (sinon l'objet ramasse est duplique).
+local PICKUP_CHECK_RADIUS = 120
+local function playerTookItem(pickup, id)
+    if not id or id <= 0 then return false end
+    return forEachPlayer(function(p)
+        if (p.Position - pickup.Position):Length() > PICKUP_CHECK_RADIUS then return false end
+        local ok, queued = pcall(function()
+            local q = p.QueuedItem
+            return q and q.Item and q.Item.ID
+        end)
+        return ok and queued == id
+    end)
+end
+
+-- Oublie la liste qu'EID garde pour ce piedestal. Sans ca, apres un echange ou un reroll, EID
+-- continue d'afficher l'ancienne liste jusqu'a ce que ses entrees expirent (120 updates).
+local function clearEIDList(pickup)
+    if type(EID) ~= "table" or type(EID.GlitchedCrownCheck) ~= "table" then return end
+    local room = EID.GlitchedCrownCheck[game:GetLevel():GetCurrentRoomIndex()]
+    if type(room) == "table" then
+        room[pickup.InitSeed .. pickup.Index] = nil -- meme cle que EID
+    end
+end
+
 local function newEntry(subType)
     return { phase = "watch", items = { subType }, index = 1, last = subType }
 end
@@ -141,6 +167,17 @@ function Cycle.OnPickupUpdate(pickup)
 
     if subType == entry.last then return end
 
+    -- Echange d'actif : le joueur a pris l'objet affiche et le jeu a pose son ancien actif ici.
+    -- On relache le piedestal (avant tout le reste : l'ancien actif peut faire partie du cycle).
+    if playerTookItem(pickup, entry.last) then
+        if entry.phase == "locked" then
+            Cycle.Dirty = true
+            clearEIDList(pickup)
+        end
+        Cycle.Pedestals[key] = newEntry(subType)
+        return
+    end
+
     local known = indexOf(entry.items, subType)
     -- Objet inconnu = reroll si un actif/une carte vient d'etre utilise, ou dans une Dice Room
     -- (le de du sol reroll les piedestaux sans passer par MC_USE_ITEM / MC_USE_CARD)
@@ -148,7 +185,10 @@ function Cycle.OnPickupUpdate(pickup)
 
     if rerolled then
         -- D6 / Spindown / carte... : on repart de zero sur le nouvel objet
-        if entry.phase == "locked" then Cycle.Dirty = true end
+        if entry.phase == "locked" then
+            Cycle.Dirty = true
+            clearEIDList(pickup)
+        end
         Cycle.Pedestals[key] = newEntry(subType)
         return
     end

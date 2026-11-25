@@ -9,7 +9,7 @@
 - Mod Config Menu Pure: keyboard key, controller button, language, radius, co-op, Tainted Isaac, sound
 - Saved on run continue, co-op support, prices kept in shops and deal rooms
 - Translated into the 20 External Item Descriptions languages</description>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
     <visibility>Private</visibility>
     <tag id="Items"/>
     <tag id="Tweaks"/>
