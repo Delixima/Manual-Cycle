@@ -105,6 +105,15 @@ local function clearEIDList(pickup)
     end
 end
 
+-- Restock Machine (entite 6.10) presente dans la salle : en payant, elle reroll les objets du
+-- magasin sans passer par MC_USE_ITEM / MC_USE_CARD (meme cas que le de de la Dice Room).
+local ENTITY_SLOT = 6
+local SLOT_RESTOCK_MACHINE = 10
+local function restockMachineInRoom()
+    local slots = Isaac.FindByType(ENTITY_SLOT, SLOT_RESTOCK_MACHINE, -1, false, false)
+    return slots ~= nil and #slots > 0
+end
+
 local function newEntry(subType)
     return { phase = "watch", items = { subType }, index = 1, last = subType }
 end
@@ -179,9 +188,10 @@ function Cycle.OnPickupUpdate(pickup)
     end
 
     local known = indexOf(entry.items, subType)
-    -- Objet inconnu = reroll si un actif/une carte vient d'etre utilise, ou dans une Dice Room
-    -- (le de du sol reroll les piedestaux sans passer par MC_USE_ITEM / MC_USE_CARD)
-    local rerolled = (not known) and (frame() <= rerollGraceUntil or inDiceRoom())
+    -- Objet inconnu = reroll si un actif/une carte vient d'etre utilise, dans une Dice Room ou
+    -- dans une salle avec une Restock Machine (rerolls sans MC_USE_ITEM / MC_USE_CARD)
+    local rerolled = (not known)
+        and (frame() <= rerollGraceUntil or inDiceRoom() or restockMachineInRoom())
 
     if rerolled then
         -- D6 / Spindown / carte... : on repart de zero sur le nouvel objet

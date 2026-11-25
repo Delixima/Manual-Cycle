@@ -36,7 +36,7 @@ The pedestal therefore cycles normally for one full round before it freezes. Wit
 
 - Uses `Morph(..., KeepPrice, KeepSeed, IgnoreModifiers)`, so the price, seed and option group are kept.
 - Only pedestals that already cycle on their own are affected, including in shops and deal rooms.
-- Picked-up items and rerolls (D6, Spindown Dice, cards, Dice Room floor...) are handled.
+- Picked-up items and rerolls (D6, Spindown Dice, cards, Dice Room floor, Restock Machine...) are handled.
 - State is kept for the whole floor and saved as JSON when you continue a run.
 - Co-op:
   - The keyboard key is for player 1, and each controller works for its own player.
@@ -64,7 +64,7 @@ The pedestal therefore cycles normally for one full round before it freezes. Wit
 ## Known limitations
 
 - Each pedestal cycles for one round before it freezes.
-- A reroll that comes from neither an active item, a card nor the Dice Room floor is undone on a pedestal that is already frozen (no such case is known).
+- A reroll that comes from neither an active item, a card, the Dice Room floor nor a Restock Machine is undone on a pedestal that is already frozen (no such case is known).
 - **Tainted Isaac pedestals = No** relies on a heuristic: a 2-item cycle is treated as Tainted Isaac's.
 - No controller button is set by default.
 

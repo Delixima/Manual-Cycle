@@ -1,5 +1,5 @@
 -- ManualCycle : les piedestaux a cycle automatique ne cyclent plus que sur appui d'une touche.
-local VERSION = "1.2.4" -- a garder identique a <version> dans metadata.xml
+local VERSION = "1.2.5" -- a garder identique a <version> dans metadata.xml
 local mod = RegisterMod("ManualCycle", 1)
 local json = require("json")
 local game = Game()
